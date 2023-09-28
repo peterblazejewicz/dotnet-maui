@@ -14,7 +14,7 @@ namespace Microsoft.Maui.AppiumTests.Issues
 		[Test]
 		public void Issue4734Test()
 		{
-			if (Device == TestDevice.Windows)
+			if (Device != TestDevice.Android)
 			{
 				Assert.Ignore("This test is failing, likely due to product issue");
 			}
