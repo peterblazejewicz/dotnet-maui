@@ -10,6 +10,7 @@ namespace Microsoft.Maui.Platform
 		{
 			// stop the animation if there is one
 			imageView.StopAnimating();
+			imageView.AnimationImages = null;
 			imageView.Image = null;
 		}
 
