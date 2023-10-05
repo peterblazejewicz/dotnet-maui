@@ -30,7 +30,7 @@ namespace Microsoft.Maui.AppiumTests.Issues
 
 				App.TapCoordinates(location.X + 10, y + lineCenterOffset);
 
-				var textAfterTap = App.Query("TapResultLabel").First().Text;
+				var textAfterTap = App.Query("TapResultControl").First().Text;
 				Assert.False(string.IsNullOrEmpty(textAfterTap));
 			}
 		}

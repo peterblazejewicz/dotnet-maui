@@ -42,7 +42,8 @@
                 </Label.FormattedText>
             </Label>
             <Label 
-                x:Name="TapResultLabel"/>
+                x:Name="TapResultLabel"
+                AutomationId="TapResultControl"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
