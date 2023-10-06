@@ -29,6 +29,8 @@ namespace Microsoft.Maui.AppiumTests.Issues
 				var y = location.Y;
 
 				App.TapCoordinates(location.X + 10, y + lineCenterOffset);
+				App.TapCoordinates(location.X + 10, y + (lineHeight * 2) + lineCenterOffset);
+				App.TapCoordinates(location.X + 10, y + (lineHeight * 4) + lineCenterOffset);
 
 				var textAfterTap = App.Query("TapResultControl").First().Text;
 				Assert.False(string.IsNullOrEmpty(textAfterTap));
