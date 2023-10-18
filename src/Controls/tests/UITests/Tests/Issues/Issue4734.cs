@@ -1,5 +1,6 @@
-﻿using Microsoft.Maui.Appium;
-using NUnit.Framework;
+﻿using NUnit.Framework;
+using UITest.Appium;
+using UITest.Core;
 
 namespace Microsoft.Maui.AppiumTests.Issues
 {
@@ -23,16 +24,16 @@ namespace Microsoft.Maui.AppiumTests.Issues
 				App.WaitForElement("WaitForStubControl");
 
 				var label = App.WaitForElement("TargetSpanControl");
-				var location = label[0].Rect;
+				var location = label.GetRect();
 				var lineHeight = location.Height / 5;
 				var lineCenterOffset = lineHeight / 2;
 				var y = location.Y;
 
-				App.TapCoordinates(location.X + 10, y + lineCenterOffset);
-				App.TapCoordinates(location.X + 10, y + (lineHeight * 2) + lineCenterOffset);
-				App.TapCoordinates(location.X + 10, y + (lineHeight * 4) + lineCenterOffset);
+				App.Click(location.X + 10, y + lineCenterOffset);
+				App.Click(location.X + 10, y + (lineHeight * 2) + lineCenterOffset);
+				App.Click(location.X + 10, y + (lineHeight * 4) + lineCenterOffset);
 
-				var textAfterTap = App.Query("TapResultControl").First().Text;
+				var textAfterTap = App.FindElement("TapResultControl").GetText();
 				Assert.False(string.IsNullOrEmpty(textAfterTap));
 			}
 		}
