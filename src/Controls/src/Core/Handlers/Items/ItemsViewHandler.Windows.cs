@@ -339,34 +339,39 @@ namespace Microsoft.Maui.Controls.Handlers.Items
 
 		protected virtual void UpdateItemsLayout()
 		{
-			if (ListViewBase is FormsGridView gridView)
+			if ((ListViewBase is FormsListView && Layout is not LinearItemsLayout) ||
+				(ListViewBase is FormsGridView && Layout is not GridItemsLayout))
 			{
-				if (Layout is LinearItemsLayout linearItemsLayout)
+				PlatformView = SelectListViewBase();
+				ConnectHandler(PlatformView);
+				//SetVirtualView(this.VirtualView);
+
+				_previousItemSpacing = -1;
+				_previousHorizontalItemSpacing = -1;
+				_previousVerticalItemSpacing = -1;
+
+				return;
+			}
+
+			if (ListViewBase is FormsListView listView && Layout is LinearItemsLayout linearItemsLayout)
+			{
+				if (linearItemsLayout.ItemSpacing != _previousItemSpacing)
 				{
-					gridView.Orientation = linearItemsLayout.ToPlatform();
-
-					gridView.Span = 1;
-
-					if (linearItemsLayout.ItemSpacing != _previousItemSpacing)
-					{
-						_previousItemSpacing = linearItemsLayout.ItemSpacing;
-						gridView.ItemContainerStyle = linearItemsLayout.GetItemContainerStyle();
-					}
+					_previousItemSpacing = linearItemsLayout.ItemSpacing;
+					listView.ItemContainerStyle = linearItemsLayout.GetItemContainerStyle();
 				}
+			}
+			else if (ListViewBase is FormsGridView gridView && Layout is GridItemsLayout gridItemsLayout)
+			{
+				gridView.Orientation = gridItemsLayout.ToPlatform();
+				gridView.Span = gridItemsLayout.Span;
 
-				if (Layout is GridItemsLayout gridItemsLayout)
+				if (gridItemsLayout.HorizontalItemSpacing != _previousHorizontalItemSpacing ||
+					gridItemsLayout.VerticalItemSpacing != _previousVerticalItemSpacing)
 				{
-					gridView.Orientation = gridItemsLayout.ToPlatform();
-
-					gridView.Span = gridItemsLayout.Span;
-
-					if (gridItemsLayout.HorizontalItemSpacing != _previousHorizontalItemSpacing ||
-						gridItemsLayout.VerticalItemSpacing != _previousVerticalItemSpacing)
-					{
-						_previousHorizontalItemSpacing = gridItemsLayout.HorizontalItemSpacing;
-						_previousVerticalItemSpacing = gridItemsLayout.VerticalItemSpacing;
-						gridView.ItemContainerStyle = gridItemsLayout.GetItemContainerStyle();
-					}
+					_previousHorizontalItemSpacing = gridItemsLayout.HorizontalItemSpacing;
+					_previousVerticalItemSpacing = gridItemsLayout.VerticalItemSpacing;
+					gridView.ItemContainerStyle = gridItemsLayout.GetItemContainerStyle();
 				}
 			}
 

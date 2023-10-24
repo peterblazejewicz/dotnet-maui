@@ -3,6 +3,8 @@ using System;
 using System.ComponentModel;
 using Microsoft.Maui.Controls.Platform;
 using Microsoft.UI.Xaml.Controls;
+using WASDKApp = Microsoft.UI.Xaml.Application;
+using WScrollMode = Microsoft.UI.Xaml.Controls.ScrollMode;
 
 namespace Microsoft.Maui.Controls.Handlers.Items
 {
@@ -81,12 +83,36 @@ namespace Microsoft.Maui.Controls.Handlers.Items
 				case GridItemsLayout gridItemsLayout:
 					return CreateGridView(gridItemsLayout);
 				case LinearItemsLayout listItemsLayout when listItemsLayout.Orientation == ItemsLayoutOrientation.Vertical:
-					return CreateGridView(new GridItemsLayout(ItemsLayoutOrientation.Vertical) { Span = 1 });
+					return CreateVerticalListView(listItemsLayout);
 				case LinearItemsLayout listItemsLayout when listItemsLayout.Orientation == ItemsLayoutOrientation.Horizontal:
-					return CreateGridView(new GridItemsLayout(ItemsLayoutOrientation.Horizontal) { Span = 1 });
+					return CreateHorizontalListView(listItemsLayout);
 			}
 
 			throw new NotImplementedException("The layout is not implemented");
+		}
+
+		static ListViewBase CreateVerticalListView(LinearItemsLayout listItemsLayout)
+		{
+			return new FormsListView()
+			{
+				ItemContainerStyle = listItemsLayout.GetItemContainerStyle()
+			};
+		}
+
+		static ListViewBase CreateHorizontalListView(LinearItemsLayout listItemsLayout)
+		{
+			var horizontalListView = new FormsListView()
+			{
+				ItemsPanel = (ItemsPanelTemplate)WASDKApp.Current.Resources["HorizontalListItemsPanel"],
+				ItemContainerStyle = listItemsLayout.GetItemContainerStyle()
+			};
+
+			ScrollViewer.SetVerticalScrollBarVisibility(horizontalListView, Microsoft.UI.Xaml.Controls.ScrollBarVisibility.Hidden);
+			ScrollViewer.SetVerticalScrollMode(horizontalListView, WScrollMode.Disabled);
+			ScrollViewer.SetHorizontalScrollMode(horizontalListView, WScrollMode.Auto);
+			ScrollViewer.SetHorizontalScrollBarVisibility(horizontalListView, Microsoft.UI.Xaml.Controls.ScrollBarVisibility.Auto);
+
+			return horizontalListView;
 		}
 
 		protected virtual void UpdateHeader()
