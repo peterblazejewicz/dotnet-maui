@@ -30,7 +30,9 @@ var iosVersion = Argument("apiversion", EnvironmentVariable("IOS_PLATFORM_VERSIO
 
 // other
 string PLATFORM = TEST_DEVICE.ToLower().Contains("simulator") ? "iPhoneSimulator" : "iPhone";
-string DOTNET_PLATFORM = TEST_DEVICE.ToLower().Contains("simulator") ? "iossimulator-x64" : "ios-x64";
+string DOTNET_PLATFORM = TEST_DEVICE.ToLower().Contains("simulator") ? 
+	$"iossimulator-{System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture.ToString().ToLower()}" : "ios-x64";
+	
 string CONFIGURATION = Argument("configuration", "Debug");
 bool DEVICE_CLEANUP = Argument("cleanup", true);
 string TEST_FRAMEWORK = "net472";
@@ -159,8 +161,8 @@ Task("Test")
 			TEST_APP = apps.First().FullPath;
 		}
 		else {
-			Error("Error: Couldn't find .app file");
-			throw new Exception("Error: Couldn't find .app file");
+			Error($"Error: Couldn't find *.app file in {binDir}");
+			throw new Exception($"Error: Couldn't find *.app file in {binDir}");
 		}
 	}
 	if (string.IsNullOrEmpty(TEST_RESULTS)) {
