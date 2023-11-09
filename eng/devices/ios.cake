@@ -66,6 +66,8 @@ Setup(context =>
 	Cleanup();
 
 	Information($"DOTNET_TOOL_PATH {DOTNET_TOOL_PATH}");
+	Information("Host OS System Arch: {0}", System.Runtime.InteropServices.RuntimeInformation.OSArchitecture);
+	Information("Host Processor System Arch: {0}", System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture);
 	
 	// only grab attached iOS devices if we are trying to test on device
 	if (TEST_DEVICE.Contains("device")) 
