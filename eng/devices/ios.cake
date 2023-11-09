@@ -36,8 +36,8 @@ string DEVICE_OS = "";
 string PLATFORM = TEST_DEVICE.ToLower().Contains("simulator") ? "iPhoneSimulator" : "iPhone";
 
 string DOTNET_PLATFORM = TEST_DEVICE.ToLower().Contains("simulator") ? 
-	$"iossimulator-{System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture.ToString().ToLower()}"
-  : "ios-{System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture.ToString().ToLower()}";
+	$"iossimulator-{System.Runtime.InteropServices.RuntimeInformation.OSArchitecture.ToString().ToLower()}"
+  : $"ios-{System.Runtime.InteropServices.RuntimeInformation.OSArchitecture.ToString().ToLower()}";
 
 string CONFIGURATION = Argument("configuration", "Debug");
 bool DEVICE_CLEANUP = Argument("cleanup", true);
@@ -68,7 +68,7 @@ Setup(context =>
 	Information($"DOTNET_TOOL_PATH {DOTNET_TOOL_PATH}");
 	Information("Host OS System Arch: {0}", System.Runtime.InteropServices.RuntimeInformation.OSArchitecture);
 	Information("Host Processor System Arch: {0}", System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture);
-	
+
 	// only grab attached iOS devices if we are trying to test on device
 	if (TEST_DEVICE.Contains("device")) 
 	{ 
