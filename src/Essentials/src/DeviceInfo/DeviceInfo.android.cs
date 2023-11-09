@@ -108,6 +108,7 @@ namespace Microsoft.Maui.Devices
 					Build.Model.Contains("google_sdk", StringComparison.Ordinal) ||
 					Build.Model.Contains("Emulator", StringComparison.Ordinal) ||
 					Build.Model.Contains("Android SDK built for x86", StringComparison.Ordinal) ||
+					Build.Model.Contains("sdk_gphone64_arm64", StringComparison.Ordinal) ||
 					Build.Manufacturer.Contains("Genymotion", StringComparison.Ordinal) ||
 					Build.Manufacturer.Contains("VS Emulator", StringComparison.Ordinal) ||
 					Build.Product.Contains("emulator", StringComparison.Ordinal) ||
