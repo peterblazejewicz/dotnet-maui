@@ -47,6 +47,8 @@ namespace Microsoft.Maui.Essentials.DeviceTests
 					DeviceInfo.Model.Contains("sdk_gphone_x86", StringComparison.Ordinal) ||
 					DeviceInfo.Model.Contains("sdk_gphone64_x86_64", StringComparison.Ordinal) ||
 					DeviceInfo.Model.Contains("sdk_gphone64_arm64", StringComparison.Ordinal) ||
+					DeviceInfo.Model.Contains("sdk_gphone_arm64", StringComparison.Ordinal) ||
+					DeviceInfo.Model.Contains("Android SDK built for arm64", StringComparison.Ordinal) ||
 					DeviceInfo.Model.Contains("google_sdk", StringComparison.Ordinal) ||
 					DeviceInfo.Model.Contains("Emulator", StringComparison.Ordinal) ||
 					DeviceInfo.Model.Contains("Android SDK built for x86", StringComparison.Ordinal);
