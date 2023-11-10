@@ -12,7 +12,7 @@ const string dotnetVersion = "net8.0";
 // required
 FilePath PROJECT = Argument("project", EnvironmentVariable("ANDROID_TEST_PROJECT") ?? DEFAULT_PROJECT);
 string TEST_DEVICE = Argument("device", EnvironmentVariable("ANDROID_TEST_DEVICE") ?? $"android-emulator-64_{defaultVersion}");
-string DEVICE_NAME = Argument("skin", EnvironmentVariable("ANDROID_TEST_SKIN") ?? "Pixel 5");
+string DEVICE_NAME = Argument("skin", EnvironmentVariable("ANDROID_TEST_SKIN") ?? "Nexus 5X");
 
 // optional
 var USE_DOTNET = Argument("dotnet", true);
@@ -116,6 +116,14 @@ Setup(context =>
 	}
 
 	Information("Test Device ID: {0}", DEVICE_ID);
+
+	Information("Listing available Android devices.");
+
+	// List available Android devices
+	foreach (var device in AndroidAvdListDevices(avdSettings))
+	{
+		Information(device.Name);
+	}
 
 	if (DEVICE_BOOT) {
 		Information("Trying to boot the emulator...");
