@@ -11,7 +11,7 @@ namespace Microsoft.Maui.DeviceTests
 		where THandler : class, IViewHandler, IPlatformViewHandler, new()
 		where TView : VisualElement, ITextInput, new()
 	{
-		[Fact]
+		[Fact(Skip = "It sometimes fails in CI and we have added an UITest")]
 		public async Task ShowsKeyboardOnFocus()
 		{
 			var textInput = new TView() as VisualElement;
